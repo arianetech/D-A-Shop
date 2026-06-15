@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&A.Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <!--=============== REMIXICON ===============-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+
+  <!--=============== CSS ===============-->
+  <link rel="stylesheet" href="css/accueil.css">
+
+</head>
+
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header id="mainHeader">
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">
+          <div class="logo-mark"><img src="img/logo.png" alt="logo" height="55px" style="vertical-align:middle;"></div>
+          <!--<span class="logo-text">D&A.Shop</span>-->
+        </a>
+        <div class="search-bar-wrapper">
+          <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input type="text" placeholder="Rechercher un produit..." id="searchInput" oninput="handleSearch(this.value)">
+        </div>
+        <ul class="nav-links">
+          <li><a href="#catalogue" onclick="scrollTo('catalogue')">Catalogue</a></li>
+          <li><a href="#categories">Catégories</a></li>
+          <li><a href="#promos">Promotions</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <div class="nav-icon-btn" onclick="toggleSearch()" title="Recherche">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+          </div>
+
+          <div class="nav-icon-btn" onclick="openCart()" title="Panier">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            <span class="cart-count" id="cartCount">0</span>
+          </div>
+
+          <!--<div class="nav-icon-btn" id="themeToggle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+          </div>-->
+
+          <div class="nav-icon-btn" onclick="toggleTheme()">
+            <button id="themeToggle">
+              <i class="ri-sun-line"></i>
+            </button>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openCheckout()">Commander</button>
+          <div class="hamburger" onclick="toggleMobileMenu()">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#" class="logo" style="margin-bottom:8px">
+      <div class="logo-mark"><img src="img/logo.png" alt="logo" height="55px" style="vertical-align:middle;"></div>
+      <!--<span class="logo-text">D&A.Shop</span>-->
+    </a>
+    <div style="border-top:1px solid var(--border);padding-top:24px;display:flex;flex-direction:column;gap:20px">
+      <a href="#catalogue" style="color:var(--text-muted);text-decoration:none;font-size:15px"
+        onclick="closeMobileMenu()">Catalogue</a>
+      <a href="#categories" style="color:var(--text-muted);text-decoration:none;font-size:15px"
+        onclick="closeMobileMenu()">Catégories</a>
+      <a href="#promos" style="color:var(--text-muted);text-decoration:none;font-size:15px"
+        onclick="closeMobileMenu()">Promotions</a>
+      <a href="#contact" style="color:var(--text-muted);text-decoration:none;font-size:15px"
+        onclick="closeMobileMenu()">Contact</a>
+    </div>
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+      <button class="btn btn-primary btn-block" onclick="openCart();closeMobileMenu()">🛒 Mon Panier</button>
+      <button class="btn btn-outline btn-block" onclick="openAdmin();closeMobileMenu()">⚙️ Administration</button>
+    </div>
+  </div>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-tag">✦ Collection Premium · Cameroun</div>
+          <h1>L'intimité mérite <em>le meilleur</em></h1>
+          <p>Des soins intimes de qualité supérieure, formulés avec soin pour votre bien-être. Discrets, naturels et
+            efficaces — livrés partout au Cameroun.</p>
+          <div class="hero-btns">
+            <button class="btn btn-primary"
+              onclick="document.getElementById('catalogue').scrollIntoView({behavior:'smooth'})">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+              </svg>
+              Explorer le catalogue
+            </button>
+            <button class="btn btn-outline"
+              onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">Nos
+              catégories</button>
+          </div>
+          <div class="hero-stats">
+            <div>
+              <div class="hero-stat-num">80+</div>
+              <div class="hero-stat-label">Clients satisfaits</div>
+            </div>
+            <div>
+              <div class="hero-stat-num">10+</div>
+              <div class="hero-stat-label">Expéditions</div>
+            </div>
+            <div>
+              <div class="hero-stat-num">24h</div>
+              <div class="hero-stat-label">Livraison</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-circle">
+            <p>Quatre parfums distinct pour vous</p>
+            <div class="hero-product-showcase">
+              <div class="hero-prod-card" onclick="openProduct(0)">
+                <!--<div class="hero-prod-emoji"><i class="ri-drop-fill"></i></div>-->
+                <div class="hero-prod-name">Parfum Fraise</div>
+                <div class="hero-prod-price">3 000 FCFA</div>
+              </div>
+              <div class="hero-prod-card" onclick="openProduct(2)">
+                <!--<div class="hero-prod-emoji">🌿</div>-->
+                <div class="hero-prod-name">Parfum Pomme</div>
+                <div class="hero-prod-price">3 000 FCFA</div>
+              </div>
+              <div class="hero-prod-card" onclick="openProduct(3)">
+                <div class="hero-prod-name">Parfum Cerise</div>
+                <div class="hero-prod-price">3 000 FCFA</div>
+              </div>
+              <div class="hero-prod-card" onclick="openProduct(4)">
+                <div class="hero-prod-name">Parfum Banane</div>
+                <div class="hero-prod-price">3 000 FCFA</div>
+              </div>
+            </div>
+          </div>
+          <!--<div class="floating-badge fb-top-right">
+            <div style="font-size:11px;color:var(--gold-light);font-weight:500;">⭐ Noté 4.9/5</div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:2px;">Plus de 200 avis</div>
+          </div>-->
+          <div class="floating-badge fb-bottom-left">
+            <div style="font-size:11px;color:var(--rose-light);font-weight:500;"><i class="ri-shopping-bag-3-fill"></i>
+              Livraison discrète</div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:2px;">Emballage neutre garanti</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TRUST STRIP ========== -->
+  <div class="trust-strip">
+    <div class="container">
+      <div class="trust-items">
+        <div class="trust-item">
+          <div class="trust-icon"><i class="ri-bus-2-fill"></i></div>
+          <div>
+            <strong>Livraison rapide</strong>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon"><i class="ri-phone-lock-fill"></i></div>
+          <div>
+            <strong>Paiement sécurisé</strong>
+            Orange Money · MTN MoMo
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon"><i class="ri-shopping-bag-3-fill"></i></div>
+          <div>
+            <strong>Emballage discret</strong>
+            Aucune mention sur le colis
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== CATEGORIES ========== 
+  <section class="section" id="categories">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">✦ Nos Collections</div>
+        <h2 class="section-title">Explorez par <em>catégorie</em></h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">Une gamme complète pour tous les besoins et toutes les envies</p>
+      </div>
+      <div class="categories-grid" id="categoriesGrid">
+         ====== Injected by JS =======
+      </div>
+    </div>
+  </section>-->
+
+  <!-- ========== PRODUCTS CATALOGUE ========== -->
+  <section class="section" id="catalogue" style="padding-top:20px">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">✦ Boutique</div>
+        <h2 class="section-title">Nos <em>produits</em> phares</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="products-toolbar">
+        <div class="filter-tabs" id="filterTabs">
+          <button class="filter-tab active" onclick="filterProducts('all', this)">Tous</button>
+          <button class="filter-tab" onclick="filterProducts('lubrifiants-eau', this)">À base d'eau</button>
+          <button class="filter-tab" onclick="filterProducts('lubrifiants-silicone', this)">Silicone</button>
+          <button class="filter-tab" onclick="filterProducts('lubrifiants-chauffants', this)">Chauffants</button>
+          <button class="filter-tab" onclick="filterProducts('lubrifiants-aromatises', this)">Aromatisés</button>
+          <button class="filter-tab" onclick="filterProducts('bien-etre', this)">Bien-être</button>
+          <button class="filter-tab" onclick="filterProducts('accessoires', this)">Accessoires</button>
+        </div>
+        <select class="sort-select" onchange="sortProducts(this.value)">
+          <option value="default">Trier par défaut</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="price-desc">Prix décroissant</option>
+          <option value="rating">Mieux notés</option>
+          <option value="new">Nouveautés</option>
+        </select>
+      </div>
+      <div class="products-grid" id="productsGrid">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAYMENT SECTION ========== -->
+  <div class="payment-section" id="promos">
+    <div class="container">
+      <div class="section-header" style="margin-bottom:32px">
+        <div class="section-tag">✦ Modes de paiement</div>
+        <h2 class="section-title">Payez comme vous <em>voulez</em></h2>
+        <p class="section-subtitle">Plusieurs options adaptées à votre quotidien camerounais</p>
+      </div>
+      <div class="payment-logos">
+        <div class="payment-logo p-orange">
+          <div class="p-dot"></div>
+          Orange Money
+        </div>
+        <div class="payment-logo p-mtn">
+          <div class="p-dot"></div>
+          MTN MoMo
+        </div>
+        <div class="payment-logo p-delivery">
+          <div class="p-dot"></div>
+          Paiement à la livraison
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== TESTIMONIALS ========== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">✦ Avis Clients</div>
+        <h2 class="section-title">Ce qu'ils <em>disent</em> de nous</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-text">Livraison ultra-rapide et emballage vraiment discret comme promis. Le produit est
+            de très bonne qualité, je recommande vivement D&A.Shop !</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">A</div>
+            <div>
+              <div class="author-name">Aminata K.</div>
+              <div class="author-location">⭐⭐⭐⭐⭐ · Yaoundé</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">J'apprécie le fait de pouvoir payer avec MTN MoMo. La commande était bien emballée
+            et le produit correspondait exactement à la description. Parfait !</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">M</div>
+            <div>
+              <div class="author-name">Marcus T.</div>
+              <div class="author-location">⭐⭐⭐⭐⭐ · Douala</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">Service client très réactif, ils ont répondu à toutes mes questions. Le lubrifiant
+            naturel Bio est excellent, ma peau a bien réagi. Merci D&A !</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">S</div>
+            <div>
+              <div class="author-name">Sophie N.</div>
+              <div class="author-location">⭐⭐⭐⭐⭐ · Bafoussam</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#" class="logo footer-logo">
+            <div class="logo-mark"><img src="img/logo.png" alt="logo" height="55px" style="vertical-align:middle;">
+            </div>
+            <span class="logo-text" style="right : -10px;">D&A.Shop</span>
+          </a>
+          <p class="footer-tagline">Votre boutique en ligne spécialisée dans les soins intimes premium. Discret, fiable
+            et livré partout au Cameroun.</p>
+          <div class="social-links">
+            <a href="https://www.facebook.com/divin.nyami.2025?mibextid=wwXlfr&mibextid=wwXlfr" class="social-link"><i
+                class="ri-facebook-line"></i></a>
+            <a href="https://m.me/ariane.edjango" target="_blank" class="contact__social-link" class="social-link"><i
+                class="ri-messenger-line"></i></a>
+            <a href="https://api.whatsapp.com/send?phone=689076939&text=Hello, plus d'informations!" target="_blank"
+              class="social-link"><i class="ri-whatsapp-line"></i></a>
+          </div>
+        </div>
+        <!--<div>
+          <div class="footer-col-title">Boutique</div>
+          <ul class="footer-links">
+            <li><a href="#">Nouveautés</a></li>
+            <li><a href="#">Meilleures ventes</a></li>
+            <li><a href="#">Promotions</a></li>
+            <li><a href="#">Packs & Coffrets</a></li>
+          </ul>
+        </div>-->
+        <div>
+          <div class="footer-col-title">Service</div>
+          <ul class="footer-links">
+            <li><a href="#">Livraison</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <ul class="footer-links">
+            <li><a href="https://api.whatsapp.com/send?phone=689076939&text=Hello, plus d'informations!"
+                target="_blank">
+                <i class="ri-whatsapp-line"></i>
+                689076939 Douala
+              </a> <br>
+
+              <a href="https://api.whatsapp.com/send?phone=692423451&text=Hello, plus d'informations!" target="_blank">
+                <i class="ri-whatsapp-line"></i>
+                692423451 Yaoundé
+              </a>
+            </li>
+
+            <li><a href="mailto:dashop@gmail.com">
+                <i class="ri-mail-line"></i> dashop@gmail.com
+              </a>
+            </li>
+
+            <li><a href="#"><i class="ri-map-pin-line"></i>
+                Maison Blanche - Biyem-assi - Yaoundé - Cameroun <br>
+                Cité Sic - Stade Marion - Douala - Cameroun
+              </a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 D&A.Shop. Tous droits réservés.</span>
+        <span></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== CART SIDEBAR ========== -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <div class="cart-title">🛒 Mon Panier</div>
+      <div class="close-btn" onclick="closeCart()">✕</div>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🛒</div>
+        <span>Votre panier est vide</span>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-summary">
+        <div class="cart-row"><span>Sous-total</span><span id="cartSubtotal">0 FCFA</span></div>
+        <div class="cart-row"><span>Livraison Yaoundé</span><span style="color:var(--rose-light)">1 500 FCFA</span>
+        </div>
+        <div class="cart-row total"><span>Total</span><span id="cartTotal">0 FCFA</span></div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="openCheckout()">
+        Passer la commande →
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== PRODUCT MODAL ========== -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal" id="productModalContent">
+      <div class="modal-close" onclick="closeProductModal()">✕</div>
+      <div class="product-modal-grid">
+        <div class="product-modal-img" id="modalImg">💧</div>
+        <div class="product-modal-info">
+          <div class="product-modal-cat" id="modalCat">Lubrifiant</div>
+          <h2 class="product-modal-name" id="modalName">Nom du produit</h2>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+            <span class="stars">★★★★★</span>
+            <span style="font-size:13px;color:var(--text-dim)">(47 avis)</span>
+          </div>
+          <p class="product-modal-desc" id="modalDesc">Description du produit</p>
+          <div class="variants-label">Contenance</div>
+          <div class="variants-grid" id="modalVariants"></div>
+          <div class="product-modal-price" id="modalPrice">0 FCFA</div>
+          <div class="modal-qty-row">
+            <div class="modal-qty">
+              <button class="modal-qty-btn" onclick="changeModalQty(-1)">−</button>
+              <span class="modal-qty-val" id="modalQty">1</span>
+              <button class="modal-qty-btn" onclick="changeModalQty(1)">+</button>
+            </div>
+            <button class="btn btn-primary" style="flex:1" onclick="addToCartFromModal()">
+              Ajouter au panier
+            </button>
+          </div>
+          <div class="product-features" id="modalFeatures"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== CHECKOUT MODAL ========== -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal checkout-modal">
+      <div class="modal-close" onclick="closeCheckout()">✕</div>
+      <div class="checkout-content">
+        <div class="checkout-title">
+          <span>✦</span> Finaliser la commande
+        </div>
+        <div id="checkoutStep1">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Prénom</label>
+              <input type="text" class="form-input" placeholder="ex: Marie">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nom</label>
+              <input type="text" class="form-input" placeholder="ex: Ekotto">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Numéro de téléphone</label>
+            <input type="tel" class="form-input" placeholder="+237 6XX XXX XXX">
+          </div>
+          <div class="form-group">
+            <input type="radio" name="livraison">
+            <label class="form-label">Livraison</label>
+            <input type="radio" name="expedition">
+            <label class="form-label">Expédition</label>
+          </div>
+          <div class="form-group">
+            <label class="form-label" name="livraison">Ville de livraison</label>
+            <select class="form-input">
+              <option>Yaoundé </option>
+              <option>Douala</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" name="expedition">Ville d'expédition</label>
+            <select class="form-input">
+              <option>Edéa (2 000 FCFA)</option>
+              <option>Bafoussam (2 000 FCFA)</option>
+              <option>Bamenda (2 500 FCFA)</option>
+              <option>Autre ville</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Adresse précise</label>
+            <input type="text" class="form-input" placeholder="ex: Bastos, Rue des Diplomates">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mode de paiement</label>
+            <div class="payment-methods">
+              <div class="payment-option selected" onclick="selectPayment(this)">
+                <div class="payment-option-icon">🟠</div>
+                <div>
+                  <div class="payment-option-name">Orange Money</div>
+                  <div class="payment-option-desc">Paiement via Orange Money Cameroun</div>
+                </div>
+                <div class="payment-radio"></div>
+              </div>
+              <div class="payment-option" onclick="selectPayment(this)">
+                <div class="payment-option-icon">🟡</div>
+                <div>
+                  <div class="payment-option-name">MTN MoMo</div>
+                  <div class="payment-option-desc">Paiement via MTN Mobile Money</div>
+                </div>
+                <div class="payment-radio"></div>
+              </div>
+              <div class="payment-option" onclick="selectPayment(this)">
+                <div class="payment-option-icon">🟢</div>
+                <div>
+                  <div class="payment-option-name">Paiement à la livraison</div>
+                  <div class="payment-option-desc">Cash ou Mobile Money à réception</div>
+                </div>
+                <div class="payment-radio"></div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:20px 0">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;letter-spacing:0.5px">RÉSUMÉ DE
+              COMMANDE</div>
+            <div id="checkoutSummary" style="font-size:13px;color:var(--text-muted)">Panier vide</div>
+          </div>
+          <button class="btn btn-gold btn-block" onclick="placeOrder()">
+            ✓ Confirmer la commande
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== TOAST CONTAINER ========== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ========== ADMIN TOGGLE ========== -->
+  <div class="admin-toggle">
+    <button class="admin-toggle-btn" onclick="openAdmin()">
+      ⚙️ Administration
+    </button>
+  </div>
+
+  <!-- ========== ADMIN PANEL ========== -->
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-header">
+      <div class="admin-title">⚙️ Panneau d'Administration — D&A.Shop</div>
+      <button class="btn btn-outline btn-sm" onclick="closeAdmin()">✕ Fermer</button>
+    </div>
+    <div class="admin-body">
+      <!-- Stats -->
+      <div class="admin-grid">
+        <div class="stat-card">
+          <div class="stat-label">CA du mois</div>
+          <div class="stat-value">284 500 FCFA</div>
+          <div class="stat-change">↑ +18% vs mois dernier</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Commandes</div>
+          <div class="stat-value">47</div>
+          <div class="stat-change">↑ +6 cette semaine</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Produits en stock</div>
+          <div class="stat-value">18</div>
+          <div class="stat-change">⚠ 2 en stock faible</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Clients enregistrés</div>
+          <div class="stat-value">126</div>
+          <div class="stat-change">↑ +12 ce mois</div>
+        </div>
+      </div>
+
+      <!-- Add Product Form -->
+      <h2 class="admin-section-title">➕ Ajouter un produit</h2>
+      <div class="admin-product-form">
+        <div class="form-row" style="margin-bottom:16px">
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Nom du produit</label>
+            <input type="text" class="form-input" id="adminProductName" placeholder="ex: Lubrifiant Bio Aloe Vera">
+          </div>
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Catégorie</label>
+            <select class="form-input" id="adminProductCat">
+              <option value="lubrifiants-eau">Lubrifiant à base d'eau</option>
+              <option value="lubrifiants-silicone">Lubrifiant silicone</option>
+              <option value="lubrifiants-chauffants">Lubrifiant chauffant</option>
+              <option value="lubrifiants-aromatises">Lubrifiant aromatisé</option>
+              <option value="bien-etre">Bien-être & Massage</option>
+              <option value="accessoires">Accessoires</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row" style="margin-bottom:16px">
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Prix (FCFA)</label>
+            <input type="number" class="form-input" id="adminProductPrice" placeholder="ex: 12500">
+          </div>
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Stock disponible</label>
+            <input type="number" class="form-input" id="adminProductStock" placeholder="ex: 25">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:16px">
+          <label class="form-label">Description</label>
+          <textarea class="form-input" id="adminProductDesc" rows="3"
+            placeholder="Description du produit..."></textarea>
+        </div>
+        <div class="form-row" style="margin-bottom:16px">
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Emoji / Icône produit</label>
+            <input type="text" class="form-input" id="adminProductEmoji" placeholder="ex: 💧">
+          </div>
+          <div class="form-group" style="margin:0">
+            <label class="form-label">Variantes (séparées par virgule)</label>
+            <input type="text" class="form-input" id="adminProductVariants" placeholder="ex: 50ml, 100ml, 150ml">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="adminAddProduct()">➕ Ajouter au catalogue</button>
+      </div>
+
+      <!-- Orders Table -->
+      <h2 class="admin-section-title">📦 Commandes récentes</h2>
+      <table class="admin-table" style="margin-bottom:40px">
+        <thead>
+          <tr>
+            <th>N° Commande</th>
+            <th>Client</th>
+            <th>Produits</th>
+            <th>Total</th>
+            <th>Paiement</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody id="adminOrdersTable">
+          <tr>
+            <td>#DA-1047</td>
+            <td>Aminata Koné</td>
+            <td>Classic Gel x2, Bio Naturel x1</td>
+            <td>29 000 FCFA</td>
+            <td>Orange Money</td>
+            <td><span class="status-badge status-delivered">✓ Livré</span></td>
+          </tr>
+          <tr>
+            <td>#DA-1046</td>
+            <td>Marcus Tamba</td>
+            <td>Silicone Premium x1</td>
+            <td>18 000 FCFA</td>
+            <td>MTN MoMo</td>
+            <td><span class="status-badge status-shipped">↗ Expédié</span></td>
+          </tr>
+          <tr>
+            <td>#DA-1045</td>
+            <td>Sophie Nkoa</td>
+            <td>Chauffant Passion x1, Cooling x1</td>
+            <td>25 500 FCFA</td>
+            <td>Livraison</td>
+            <td><span class="status-badge status-preparing">⏳ Préparation</span></td>
+          </tr>
+          <tr>
+            <td>#DA-1044</td>
+            <td>Pierre Essomba</td>
+            <td>Massage Pack x1</td>
+            <td>13 000 FCFA</td>
+            <td>Orange Money</td>
+            <td><span class="status-badge status-delivered">✓ Livré</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Products Table -->
+      <h2 class="admin-section-title">📋 Catalogue produits</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Produit</th>
+            <th>Catégorie</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <th>Ventes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="adminProductsTable">
+          <!-- Injected by JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const icon = themeToggle.querySelector('i');
+    const htmlElement = document.documentElement;
+
+    function toggleTheme() {
+      const currentTheme = htmlElement.getAttribute('data-theme');
+
+      if (currentTheme === 'dark') {
+        //Passer au mode clair
+        htmlElement.removeAttribute('data-theme');
+        icon.classList.remove('ri-moon-line');
+        icon.classList.add('ri-sun-line');
+        localStorage.setItem('theme', 'light');
+      } else {
+        htmlElement.setAttribute('data-theme', 'dark');
+        icon.classList.remove('ri-sun-line');
+        icon.classList.add('ri-moon-line');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Charger le thème sauvegardé au chargement de la page
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      htmlElement.setAttribute('data-theme', 'dark');
+      icon.classList.remove('ri-sun-line');
+      icon.classList.add('ri-moon-line');
+    }
+
+    themeToggle.addEventListener('click', toggleTheme);
+  </script>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

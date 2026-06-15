@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&A.Shop — L'Élégance au Naturel</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- CANVAS ÉTOILES -->
+  <canvas id="stars"></canvas>
+
+  <!-- HEADER -->
+  <header>
+    <a href="index.html" class="logo">
+      <div class="logo-mark">D&A</div>
+      <span class="logo-text">D&A.Shop</span>
+    </a>
+    <a href="login.html" class="btn-login">
+      <i class="ri-user-line"></i> Se connecter
+    </a>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+
+      <div class="hero-tag">
+        <i class="ri-sparkling-2-line"></i> Soins intimes premium · Cameroun
+      </div>
+
+      <h1>
+        L'intimité mérite<br>
+        <em>le meilleur</em>
+      </h1>
+
+      <p class="hero-sub">
+        Des produits de qualité supérieure, formulés avec soin pour votre bien-être.
+        Discrets, naturels et efficaces — livrés partout au Cameroun en 48h.
+      </p>
+
+      <!-- CARTE 1 : S'inscrire -->
+      <div class="hero-card">
+        <a href="register.html" class="btn-register">
+          <i class="ri-user-add-line"></i>
+          Créer un compte gratuitement
+        </a>
+      </div>
+
+      <!-- CARTE 2 : Accéder à D&A.Shop -->
+      <div class="hero-card card-outline">
+        <a href="accueil.html" class="btn-shop">
+          <i class="ri-store-3-line"></i>
+          Accéder à D&A.Shop
+        </a>
+      </div>
+
+      <!-- Confiance -->
+      <div class="hero-trust">
+        <span><i class="ri-shield-check-line"></i> Paiement sécurisé</span>
+        <span><i class="ri-gift-line"></i> Emballage discret</span>
+        <span><i class="ri-truck-line"></i> Livraison rapide</span>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- FOOTER MINIMAL -->
+  <footer>
+    <span>© 2026 D&A.Shop · Cameroun</span>
+    <div class="footer-links">
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // ===== STARFIELD CANVAS =====
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function initStars() {
+      stars = [];
+      const count = Math.floor((canvas.width * canvas.height) / 6000);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.4 + 0.2,
+          alpha: Math.random(),
+          speed: Math.random() * 0.004 + 0.001,
+          phase: Math.random() * Math.PI * 2,
+        });
+      }
+    }
+
+    function drawStars(t) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const s of stars) {
+        const a = 0.25 + 0.75 * Math.abs(Math.sin(s.phase + t * s.speed));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${a})`;
+        ctx.fill();
+      }
+      requestAnimationFrame(drawStars);
+    }
+
+    resize();
+    initStars();
+    requestAnimationFrame(drawStars);
+    window.addEventListener('resize', () => { resize(); initStars(); });
+  </script>
+
+</body>
+</html>

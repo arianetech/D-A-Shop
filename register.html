@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Créer un compte — D&A.Shop</title>
+  <link rel="stylesheet" href="css/register.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+
+  <canvas id="stars"></canvas>
+
+  <!-- HEADER -->
+  <header>
+    <a href="index.html" class="logo">
+      <div class="logo-mark">D&A</div>
+      <span class="logo-text">D&A.Shop</span>
+    </a>
+    <a href="login.html" class="btn-header">
+      <i class="ri-login-box-line"></i> Se connecter
+    </a>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <div class="auth-card">
+
+      <!-- En-tête -->
+      <div class="auth-card-header">
+        <div class="auth-icon">
+          <i class="ri-user-add-line"></i>
+        </div>
+        <h1>Créer un compte</h1>
+        <p>Rejoignez D&A.Shop et accédez à toute notre collection</p>
+      </div>
+
+      <!-- Barre de progression -->
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-label" id="progressLabel">Complétez les champs pour créer votre compte</div>
+
+      <!-- Formulaire -->
+      <form id="registerForm" >
+
+        <!-- Nom & Prénom -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="prenom"><i class="ri-user-line"></i> Prénom</label>
+            <input type="text" id="prenom" name="prenom"
+              placeholder="Marie" autocomplete="given-name" required>
+            <span class="field-hint" id="hintPrenom"></span>
+          </div>
+          <div class="form-group">
+            <label for="nom"><i class="ri-user-line"></i> Nom</label>
+            <input type="text" id="nom" name="nom"
+              placeholder="Ekotto" autocomplete="family-name" required>
+            <span class="field-hint" id="hintNom"></span>
+          </div>
+        </div>
+
+        <!-- Téléphone -->
+        <div class="form-group">
+          <label for="phone"><i class="ri-phone-line"></i> Téléphone</label>
+          <div class="phone-wrap">
+            <span class="phone-prefix">+237</span>
+            <input type="tel" id="phone" name="phone"
+              placeholder="6XX XXX XXX" autocomplete="tel" required>
+          </div>
+          <span class="field-hint" id="hintPhone"></span>
+        </div>
+
+        <!-- E-mail -->
+        <div class="form-group">
+          <label for="email"><i class="ri-mail-line"></i> Adresse e-mail</label>
+          <input type="email" id="email" name="email"             placeholder="vous@exemple.cm" autocomplete="email" required>
+          <span class="field-hint" id="hintEmail"></span>
+        </div>
+
+        <!-- Ville 
+        <div class="form-group">
+          <label for="ville"><i class="ri-map-pin-line"></i> Ville</label>
+          <select id="ville" name="ville" required>
+            <option value="" disabled selected>Sélectionnez votre ville</option>
+            <option value="yaounde">Yaoundé</option>
+            <option value="douala">Douala</option>
+            <option value="bafoussam">Bafoussam</option>
+            <option value="bamenda">Bamenda</option>
+            <option value="garoua">Garoua</option>
+            <option value="maroua">Maroua</option>
+            <option value="autre">Autre ville</option>
+          </select>
+        </div>-->
+
+        <!-- Mot de passe -->
+        <div class="form-group">
+          <label for="password"><i class="ri-lock-line"></i> Mot de passe</label>
+          <div class="input-password-wrap">
+            <input type="password" id="password" name="password"
+              placeholder="Minimum 8 caractères" autocomplete="new-password"
+              oninput="checkStrength(this.value)" required>
+            <button type="button" class="toggle-pw" onclick="togglePw('password', this)" tabindex="-1">
+              <i class="ri-eye-off-line"></i>
+            </button>
+          </div>
+          <!-- Jauge force -->
+          <div class="strength-bar">
+            <div class="strength-fill" id="strengthFill"></div>
+          </div>
+          <span class="strength-label" id="strengthLabel"></span>
+        </div>
+
+        <!-- Confirmer mot de passe -->
+        <div class="form-group">
+          <label for="confirm"><i class="ri-lock-2-line"></i> Confirmer le mot de passe</label>
+          <div class="input-password-wrap">
+            <input type="password" id="confirm" name="confirm"
+              placeholder="Répétez votre mot de passe"
+              autocomplete="new-password" required>
+            <button type="button" class="toggle-pw" onclick="togglePw('confirm', this)" tabindex="-1">
+              <i class="ri-eye-off-line"></i>
+            </button>
+          </div>
+          <span class="field-hint" id="hintConfirm"></span>
+        </div>
+
+
+        <!-- Messages retour -->
+        <div class="msg msg-error" id="msgError">
+          <i class="ri-close-circle-line"></i>
+          <span id="msgErrorText">Veuillez corriger les erreurs ci-dessus.</span>
+        </div>
+        <div class="msg msg-success" id="msgSuccess">
+          <i class="ri-checkbox-circle-line"></i>
+          Compte créé avec succès ! Redirection vers la boutique…
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span class="btn-label">
+            <i class="ri-user-add-line"></i> Créer mon compte
+          </span>
+          <span class="btn-loader" style="display:none">
+            <i class="ri-loader-4-line spin"></i> Création en cours…
+          </span>
+        </button>
+
+      </form>
+
+      <!-- Séparateur 
+      <div class="divider"><span>ou</span></div>-->
+
+      <!-- Boutons sociaux 
+      <div class="social-btns">
+        <button class="btn-social">
+          <i class="ri-google-line"></i> Google
+        </button>
+        <button class="btn-social">
+          <i class="ri-facebook-fill"></i> Facebook
+        </button>
+      </div>-->
+
+      <!-- Lien vers login -->
+      <p class="auth-switch">
+        Déjà un compte ?
+        <a href="login.html">Se connecter <i class="ri-arrow-right-line"></i></a>
+      </p>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 D&A.Shop · Cameroun</span>
+    <div class="footer-links">
+      <a href="#">Confidentialité</a>
+      <a href="#">Conditions</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    /* ===== STARFIELD ===== */
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    function initStars() {
+      stars = [];
+      const n = Math.floor((canvas.width * canvas.height) / 7000);
+      for (let i = 0; i < n; i++) stars.push({
+        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.2, speed: Math.random() * 0.004 + 0.001,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+    function drawStars(t) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const s of stars) {
+        const a = 0.2 + 0.7 * Math.abs(Math.sin(s.phase + t * s.speed));
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${a})`; ctx.fill();
+      }
+      requestAnimationFrame(drawStars);
+    }
+    resize(); initStars(); requestAnimationFrame(drawStars);
+    window.addEventListener('resize', () => { resize(); initStars(); });
+
+    /* ===== TOGGLE MOT DE PASSE ===== */
+    function togglePw(id, btn) {
+      const input = document.getElementById(id);
+      const isText = input.type === 'text';
+      input.type = isText ? 'password' : 'text';
+      btn.querySelector('i').className = isText ? 'ri-eye-off-line' : 'ri-eye-line';
+    }
+
+    /* ===== FORCE MOT DE PASSE ===== */
+    function checkStrength(val) {
+      const fill  = document.getElementById('strengthFill');
+      const label = document.getElementById('strengthLabel');
+      let score = 0;
+      if (val.length >= 8)  score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+
+      const levels = [
+        { w: '0%',   color: 'transparent', txt: '' },
+        { w: '25%',  color: '#e53e3e',     txt: 'Très faible' },
+        { w: '50%',  color: '#dd6b20',     txt: 'Faible' },
+        { w: '75%',  color: '#d4a843',     txt: 'Moyen' },
+        { w: '100%', color: '#5ad282',     txt: 'Fort ✓' },
+      ];
+      const l = levels[score];
+      fill.style.width = l.w;
+      fill.style.background = l.color;
+      label.textContent = l.txt;
+      label.style.color = l.color;
+
+      updateProgress();
+    }
+
+    /* ===== BARRE DE PROGRESSION ===== */
+    function updateProgress() {
+      const fields = ['prenom','nom','phone','email','ville','password','confirm','cgu'];
+      let filled = 0;
+      fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && (el.type === 'checkbox' ? el.checked : el.value.trim())) filled++;
+      });
+      const pct = Math.round((filled / fields.length) * 100);
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressLabel').textContent =
+        pct === 100 ? '✓ Tout est rempli, vous pouvez vous inscrire !' :
+        `${pct}% complété — encore ${fields.length - filled} champ(s)`;
+    }
+
+    // Écouter tous les champs pour la progression
+    document.querySelectorAll('input, select').forEach(el => {
+      el.addEventListener('input',  updateProgress);
+      el.addEventListener('change', updateProgress);
+    });
+
+    /* ===== SUBMIT ===== */
+    function handleRegister(e) {
+      e.preventDefault();
+      const err = document.getElementById('msgError');
+      const ok  = document.getElementById('msgSuccess');
+      const btn = document.getElementById('submitBtn');
+      const label  = document.querySelector('.btn-label');
+      const loader = document.querySelector('.btn-loader');
+      const errTxt = document.getElementById('msgErrorText');
+
+      err.classList.remove('show');
+      ok.classList.remove('show');
+
+      // Validations
+      const pw      = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm').value;
+      const cgu     = document.getElementById('cgu').checked;
+      const phone   = document.getElementById('phone').value.trim();
+
+      if (pw.length < 8) {
+        errTxt.textContent = 'Le mot de passe doit contenir au moins 8 caractères.';
+        err.classList.add('show'); return;
+      }
+      if (pw !== confirm) {
+        errTxt.textContent = 'Les mots de passe ne correspondent pas.';
+        err.classList.add('show'); return;
+      }
+      if (!/^6[0-9]{8}$/.test(phone.replace(/\s/g, ''))) {
+        errTxt.textContent = 'Numéro de téléphone invalide (ex : 6XX XXX XXX).';
+        err.classList.add('show'); return;
+      }
+      if (!cgu) {
+        errTxt.textContent = 'Veuillez accepter les conditions d\'utilisation.';
+        err.classList.add('show'); return;
+      }
+
+      // Simulation
+      label.style.display = 'none';
+      loader.style.display = 'flex';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        loader.style.display = 'none';
+        label.style.display  = 'flex';
+        btn.disabled = false;
+        ok.classList.add('show');
+        setTimeout(() => { window.location.href = 'da-shop.html'; }, 1800);
+      }, 1600);
+    }
+  </script>
+
+</body>
+</html>
