@@ -196,7 +196,7 @@ function addToCart(product, variant, qty) {
         cart.push({ key, product, variant, qty });
     }
     updateCartUI();
-    showToast(`✓ ${product.name} ajouté au panier !`, 'success');
+    showToast(` ${product.name} ajouté au panier !`, 'success');
 }
 
 function removeFromCart(key) {
@@ -219,8 +219,8 @@ function updateCartUI() {
     countEl.classList.toggle('show', count > 0);
 
     const subtotal = cart.reduce((sum, i) => sum + i.product.price * i.qty, 0);
-    const delivery = 1500;
-    const total = subtotal + (cart.length > 0 ? delivery : 0);
+   // const delivery = 1500;
+    const total = subtotal ;//+ (cart.length > 0 ? delivery : 0);
 
     document.getElementById('cartSubtotal').textContent = formatPrice(subtotal);
     document.getElementById('cartTotal').textContent = formatPrice(total);
@@ -286,7 +286,7 @@ function updateCheckoutSummary() {
     if (!el) return;
     if (cart.length === 0) { el.textContent = 'Panier vide'; return; }
     const subtotal = cart.reduce((s, i) => s + i.product.price * i.qty, 0);
-    const total = subtotal + 1500;
+    const total = subtotal //+ 1500;
     el.innerHTML = cart.map(i => `<div style="display:flex;justify-content:space-between;margin-bottom:4px">
     <span>${i.product.name} × ${i.qty}</span><span>${formatPrice(i.product.price * i.qty)}</span>
   </div>`).join('') + `<div style="display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-weight:600;color:var(--rose-light)">
@@ -301,7 +301,7 @@ function selectPayment(el) {
 
 function placeOrder() {
     const num = '#DA-' + (1048 + Math.floor(Math.random() * 10));
-    const total = cart.reduce((s, i) => s + i.product.price * i.qty, 0) + 1500;
+    const total = cart.reduce((s, i) => s + i.product.price * i.qty, 0) ;//+ 1500;
     cart = [];
     updateCartUI();
     closeCheckout();
